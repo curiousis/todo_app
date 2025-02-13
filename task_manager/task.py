@@ -2,7 +2,9 @@ import datetime
 
 
 class Task:
-    def __init__(self, task_name, is_complete=False, task_description=""):
+    def __init__(
+        self, task_name, is_complete=False, task_description="", createdAt=None
+    ):
         self.task_name = task_name
         self.is_complete = is_complete
         self.task_description = task_description
@@ -25,11 +27,19 @@ class Task:
         self.is_complete = False
 
     def response(self):
-        status = "completed" if self.is_complete else "Incomplete"
 
         return {
-            "title": self.task_name,
-            "status": status,
-            "description": self.task_description,
+            "task_name": self.task_name,
+            "task_description": self.task_description,
             "createdAt": self.createdAt.strftime("%d-%m-%Y %H:%M"),
+            "is_complete": self.is_complete,
         }
+
+    @staticmethod
+    def task_obj_from_dict(task_dict):
+        return Task(
+            task_name=task_dict["task_name"],
+            task_description=task_dict["task_description"],
+            is_complete=task_dict["is_complete"],
+            createdAt=task_dict["createdAt"],
+        )

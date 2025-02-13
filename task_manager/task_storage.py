@@ -1,14 +1,18 @@
-from task_operations import add_task, remove_task, display_tasks
-from task import Task
+from .task import Task
+import json
+
+TASK_FILE = "tasks.json"
 
 
-tasks = []
-title = input("title: ")
-description = input("description: ")
+def save_tasks(tasks):
+    with open(TASK_FILE, "w") as file:
+        json.dump([task.response() for task in tasks], file, indent=4)
 
 
-item = Task(title, task_description=description)
-
-print(add_task(tasks, item))
-
-display_tasks(tasks)
+def load_tasks():
+    try:
+        with open(TASK_FILE, "r") as file:
+            task_dict = json.load(file)
+            return [Task.task_obj_from_dict(task) for task in task_dict]
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
