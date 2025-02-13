@@ -35,6 +35,7 @@ class Task:
             "is_complete": self.is_complete,
         }
 
+    # changing the Task object to a dictionary cos json doest accept objects
     @staticmethod
     def task_obj_from_dict(task_dict):
         return Task(
