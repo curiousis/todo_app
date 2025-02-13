@@ -24,7 +24,12 @@ class Task:
         """
         self.is_complete = False
 
-    def __str__(self):
+    def response(self):
         status = "completed" if self.is_complete else "Incomplete"
 
-        return f"{self.task_name} : {status} \n{self.task_description} \ncreated on : {self.createdAt.strftime('%d-%m-%Y %H : %M')}"
+        return {
+            "title": self.task_name,
+            "status": status,
+            "description": self.task_description,
+            "createdAt": self.createdAt.strftime("%d-%m-%Y %H:%M"),
+        }
